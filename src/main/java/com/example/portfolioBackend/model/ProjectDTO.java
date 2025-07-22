@@ -1,46 +1,23 @@
 package com.example.portfolioBackend.model;
 
-import jakarta.persistence.*;
-
 import java.util.List;
 
-
-@Entity
-@Table(name = "projects")
-public class Project {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int projectId;
-
-    @Column(nullable = false)
+public class ProjectDTO {
     private String name;
-
-    @Column(columnDefinition = "TEXT")
     private String description;
-
-    @Embedded
+    private String repoLink;
+    private List<String> tags;
     private ProjectImage image;
 
-    @Column
-    private String repoLink;
-
-    @ElementCollection
-    private List<String> tags;
-
-    public Project() {
-
+    public ProjectDTO() {
     }
 
-    public Project(String name, String description, ProjectImage image, String repoLink, List<String> tags) {
+    public ProjectDTO(String name, String description, String repoLink, List<String> tags, ProjectImage image) {
         this.name = name;
         this.description = description;
-        this.image = image;
         this.repoLink = repoLink;
         this.tags = tags;
-    }
-
-    public int getProjectId() {
-        return projectId;
+        this.image = image;
     }
 
     public String getName() {
@@ -59,14 +36,6 @@ public class Project {
         this.description = description;
     }
 
-    public ProjectImage getImage() {
-        return image;
-    }
-
-    public void setImage(ProjectImage image) {
-        this.image = image;
-    }
-
     public String getRepoLink() {
         return repoLink;
     }
@@ -81,5 +50,13 @@ public class Project {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public ProjectImage getImage() {
+        return image;
+    }
+
+    public void setImage(ProjectImage image) {
+        this.image = image;
     }
 }

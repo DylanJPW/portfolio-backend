@@ -15,4 +15,9 @@ public class ProjectService {
     public List<Project> getAllProjects() {
         return projectRepository.findAll();
     }
+
+    public Project createProject(Project project) {
+        if (projectRepository.existsById(project.getProjectId())) return null;
+        return projectRepository.save(project);
+    }
 }
