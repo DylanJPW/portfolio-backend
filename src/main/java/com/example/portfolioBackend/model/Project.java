@@ -10,7 +10,7 @@ import java.util.List;
 public class Project {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int projectId;
+    private int id;
 
     @Column(nullable = false)
     private String name;
@@ -39,8 +39,8 @@ public class Project {
         this.tags = tags;
     }
 
-    public int getProjectId() {
-        return projectId;
+    public int getId() {
+        return id;
     }
 
     public String getName() {
