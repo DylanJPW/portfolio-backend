@@ -43,13 +43,21 @@ public class ProjectController {
 
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest()
-                    .path("/{projectId}")
-                    .buildAndExpand(newProject.getProjectId())
+                    .path("/{id}")
+                    .buildAndExpand(newProject.getId())
                     .toUri();
 
             return ResponseEntity.created(location).build();
         } catch (Exception ex) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @DeleteMapping("/deleteProject/{id}")
+    public ResponseEntity<Void> deleteProject(@PathVariable int id) {
+        if (projectService.deleteProject(id)) {
+            return ResponseEntity.status(HttpStatus.OK).build();
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }

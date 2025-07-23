@@ -17,7 +17,13 @@ public class ProjectService {
     }
 
     public Project createProject(Project project) {
-        if (projectRepository.existsById(project.getProjectId())) return null;
+        if (projectRepository.existsById(project.getId())) return null;
         return projectRepository.save(project);
+    }
+
+    public boolean deleteProject(int id) {
+        if (!projectRepository.existsById(id)) return false;
+        projectRepository.deleteById(id);
+        return true;
     }
 }
