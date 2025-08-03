@@ -10,6 +10,10 @@ public class Skill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name = "cv_id") // foreign key in Experience table
+    private CV cv;
+
     @Column(nullable = false)
     private String name;
 
@@ -21,6 +25,18 @@ public class Skill {
 
     @Lob
     private String description;
+
+    public Skill() {
+
+    }
+
+    public Skill(CV cv, String name, SkillType type, int yearsExperience, String description) {
+        this.cv = cv;
+        this.name = name;
+        this.type = type;
+        this.yearsExperience = yearsExperience;
+        this.description = description;
+    }
 
     public int getId() {
         return id;

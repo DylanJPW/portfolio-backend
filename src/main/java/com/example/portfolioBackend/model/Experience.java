@@ -11,6 +11,10 @@ public class Experience {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+    @ManyToOne
+    @JoinColumn(name = "cv_id") // foreign key in Experience table
+    private CV cv;
+
     @Column(nullable = false)
     private String companyName;
 
