@@ -17,6 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 @Service
 public class CVService {
@@ -39,10 +40,12 @@ public class CVService {
 
         String skillsSection = extractBetween(parsedText, "SKILLS", "WORK EXPERIENCE");
         List<Skill> skills = parseSkills(skillsSection);
+        for (Skill skill : skills) {skill.setCv(cv);}
         cv.setSkillList(skills);
 
         String experienceSection = extractBetween(parsedText, "WORK EXPERIENCE", "EDUCATION");
         List<Experience> experiences = parseExperience(experienceSection);
+        for (Experience experience : experiences) {experience.setCv(cv);}
         cv.setExperienceList(experiences);
 
         return cv;
@@ -69,7 +72,7 @@ public class CVService {
             if (!skillName.isEmpty()) {
                 Skill skill = new Skill();
                 skill.setName(skillName);
-                skill.setType(i < skillStrings.length / 2 ? SkillType.HARD : SkillType.SOFT);
+                skill.setType(i <= skillStrings.length / 2 ? SkillType.HARD : SkillType.SOFT);
                 skills.add(skill);
             }
         }
@@ -79,52 +82,46 @@ public class CVService {
     private List<Experience> parseExperience(String experienceText) {
         List<Experience> experiences = new ArrayList<>();
 
-        String[] jobs = experienceText.split("(?=\\b[A-Z ]+, [A-Z ]+)");
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
+        Pattern pattern = Pattern.compile("(?=^[A-Z][A-Z ]+, [A-Z][A-Z ]+$)", Pattern.MULTILINE);
+        String[] jobs = pattern.split(experienceText);
 
         for (String job : jobs) {
             job = job.trim();
 
             Experience experience = new Experience();
 
-            String[] lines = job.split("\n");
-            experience.setPosition(lines[0].split(",")[0].trim());
-            experience.setCompanyName(lines[0].split(",")[1].trim());
+            String[] lines = job.split("\n", 3);
+            String companyAndPosition = lines[0];
+            String dates = lines[1];
+            String description = lines[2];
 
-            for (String line : lines) {
-                if (line.startsWith("Dates:")) {
-                    String dateRange = line.replace("Dates:", "").trim();
-                    String[] dates = dateRange.split("–");
+            experience.setPosition(companyAndPosition.split(",")[0].trim());
+            experience.setCompanyName(companyAndPosition.split(",")[1].trim());
 
-                    String startDateStr = cleanDate(dates[0]);
-                    experience.setStartDate(parseDate(startDateStr, formatter));
-
-                    if (dates.length > 1) {
-                        String endDateStr = dates[1].trim();
-                        if (endDateStr.equalsIgnoreCase("Current")) {
-                            experience.setEndDate(null); // null means ongoing
-                        } else {
-                            experience.setEndDate(parseDate(cleanDate(endDateStr), formatter));
-                        }
-                    }
-                } else {
-                    StringBuilder description = new StringBuilder();
-                    description.append(line.trim()).append(" ");
-                    experience.setDescription(description.toString().trim());
-                    experiences.add(experience);
+            if (!dates.isEmpty()) {
+                String[] dateParts = dates.replace("Dates: ", "").split("–");
+                experience.setStartDate(parseDate(cleanDate(dateParts[0])));
+                if (dateParts.length > 1) {
+                    String end = dateParts[1].trim();
+                    experience.setEndDate(end.equalsIgnoreCase("Current") ? null : parseDate(cleanDate(end)));
                 }
             }
+
+            if (!description.isEmpty()) {
+                experience.setDescription(description.replace("\r\n", ""));
+            }
+
             experiences.add(experience);
         }
         return experiences;
     }
 
     private String cleanDate(String date) {
-        return date.replaceAll("(st|nd|rd|th)", "").trim();
+        return date.replaceAll("(?<=\\d)(st|nd|rd|th)", "").trim();
     }
 
-    private LocalDate parseDate(String dateStr, DateTimeFormatter formatter) {
+    private LocalDate parseDate(String dateStr) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.ENGLISH);
         return LocalDate.parse(dateStr, formatter);
     }
 

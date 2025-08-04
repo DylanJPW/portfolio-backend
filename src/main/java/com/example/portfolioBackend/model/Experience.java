@@ -46,6 +46,14 @@ public class Experience {
         return id;
     }
 
+    public CV getCv() {
+        return cv;
+    }
+
+    public void setCv(CV cv) {
+        this.cv = cv;
+    }
+
     public String getCompanyName() {
         return companyName;
     }

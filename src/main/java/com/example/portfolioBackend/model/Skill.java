@@ -30,8 +30,7 @@ public class Skill {
 
     }
 
-    public Skill(CV cv, String name, SkillType type, int yearsExperience, String description) {
-        this.cv = cv;
+    public Skill(String name, SkillType type, int yearsExperience, String description) {
         this.name = name;
         this.type = type;
         this.yearsExperience = yearsExperience;
@@ -40,6 +39,14 @@ public class Skill {
 
     public int getId() {
         return id;
+    }
+
+    public CV getCv() {
+        return cv;
+    }
+
+    public void setCv(CV cv) {
+        this.cv = cv;
     }
 
     public String getName() {
