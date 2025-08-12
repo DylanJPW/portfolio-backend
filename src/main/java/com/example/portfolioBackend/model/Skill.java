@@ -1,6 +1,7 @@
 package com.example.portfolioBackend.model;
 
 import com.example.portfolioBackend.model.enums.SkillType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -12,12 +13,14 @@ public class Skill {
 
     @ManyToOne
     @JoinColumn(name = "cv_id") // foreign key in Experience table
+    @JsonIgnore
     private CV cv;
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private SkillType type;
 
     @Column

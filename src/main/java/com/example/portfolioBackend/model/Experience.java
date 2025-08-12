@@ -1,5 +1,6 @@
 package com.example.portfolioBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ public class Experience {
 
     @ManyToOne
     @JoinColumn(name = "cv_id") // foreign key in Experience table
+    @JsonIgnore
     private CV cv;
 
     @Column(nullable = false)

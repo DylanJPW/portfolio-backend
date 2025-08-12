@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/cv")
@@ -34,10 +33,10 @@ public class CVController {
         }
     }
 
-    @GetMapping("/getCV")
-    public ResponseEntity<Optional<CV>> getCV (@PathVariable int cvId) {
+    @GetMapping("/getCV/{id}")
+    public ResponseEntity<CV> getCV (@PathVariable int id) {
         try {
-            Optional<CV> cv = cvService.getCVById(cvId);
+            CV cv = cvService.getCVById(id).get();
 
             return new ResponseEntity<>(cv, HttpStatus.OK);
         } catch (Exception e) {
