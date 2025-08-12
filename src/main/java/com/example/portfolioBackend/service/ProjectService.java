@@ -1,7 +1,6 @@
 package com.example.portfolioBackend.service;
 
 import com.example.portfolioBackend.model.Project;
-import com.example.portfolioBackend.model.ProjectDTO;
 import com.example.portfolioBackend.repository.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
