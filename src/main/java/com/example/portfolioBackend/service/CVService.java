@@ -28,6 +28,8 @@ public class CVService {
 
     public Optional<CV> getCVById (int id) { return cvRepository.findById(id); }
 
+    public Optional<CV> getLatestCV () { return cvRepository.findFirstByOrderByUploadDateDesc(); }
+
     public void saveCV(MultipartFile cvFile) throws IOException {
 
         CV cv = processCVFile(cvFile);

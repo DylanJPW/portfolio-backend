@@ -43,4 +43,15 @@ public class CVController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @GetMapping("/getLatestCV")
+    public ResponseEntity<CV> getLatestCV () {
+        try {
+            CV cv = cvService.getLatestCV().get();
+
+            return new ResponseEntity<>(cv, HttpStatus.OK);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }
