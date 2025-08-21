@@ -30,12 +30,7 @@ public class CVService {
 
     public Optional<CV> getLatestCV () { return cvRepository.findFirstByOrderByUploadDateDesc(); }
 
-    public void saveCV(MultipartFile cvFile) throws IOException {
-
-        CV cv = processCVFile(cvFile);
-
-        cvRepository.save(cv);
-    }
+    public void saveCV(CV cv) throws IOException {cvRepository.save(cv);}
 
     public CV processCVFile (MultipartFile cvFile) throws IOException {
         String parsedText = extractFileText(cvFile);

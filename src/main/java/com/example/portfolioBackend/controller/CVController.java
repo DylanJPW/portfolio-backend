@@ -20,14 +20,25 @@ public class CVController {
     @Autowired
     private CVService cvService;
 
-    @PostMapping(value = "/uploadCV", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> uploadCV (@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+    @PostMapping(value = "/parseCVFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<CV> parseCVFile (@RequestParam("file") MultipartFile file) {
         try {
-            cvService.saveCV(file);
+            CV parsedCVObject = cvService.processCVFile(file);
 
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return new ResponseEntity<>(parsedCVObject, HttpStatus.OK);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PostMapping("/saveCV")
+    public ResponseEntity<Void> saveCV (@RequestParam CV cv) {
+        try {
+            cvService.saveCV(cv);
+
+            return ResponseEntity.status(HttpStatus.OK).build();
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
