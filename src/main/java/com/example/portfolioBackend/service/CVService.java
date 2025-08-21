@@ -1,8 +1,6 @@
 package com.example.portfolioBackend.service;
 
-import com.example.portfolioBackend.model.CV;
-import com.example.portfolioBackend.model.Experience;
-import com.example.portfolioBackend.model.Skill;
+import com.example.portfolioBackend.model.*;
 import com.example.portfolioBackend.model.enums.SkillType;
 import com.example.portfolioBackend.repository.CVRepository;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -30,7 +28,10 @@ public class CVService {
 
     public Optional<CV> getLatestCV () { return cvRepository.findFirstByOrderByUploadDateDesc(); }
 
-    public void saveCV(CV cv) throws IOException {cvRepository.save(cv);}
+    public CV saveCV(CVDTO cvDto) throws IOException {
+        CV cv = CVMapper.toCVEntity(cvDto);
+        return cvRepository.save(cv);
+    }
 
     public CV processCVFile (MultipartFile cvFile) throws IOException {
         String parsedText = extractFileText(cvFile);

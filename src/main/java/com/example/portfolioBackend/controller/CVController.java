@@ -1,8 +1,8 @@
 package com.example.portfolioBackend.controller;
 
 import com.example.portfolioBackend.model.CV;
+import com.example.portfolioBackend.model.CVDTO;
 import com.example.portfolioBackend.service.CVService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -34,11 +34,11 @@ public class CVController {
     }
 
     @PostMapping("/saveCV")
-    public ResponseEntity<Void> saveCV (@RequestParam CV cv) {
+    public ResponseEntity<CV> saveCV (@RequestBody CVDTO cvDto) {
         try {
-            cvService.saveCV(cv);
+            CV savedCV = cvService.saveCV(cvDto);
 
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return new ResponseEntity<>(savedCV, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
