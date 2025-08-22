@@ -1,8 +1,8 @@
 package com.example.portfolioBackend.controller;
 
 import com.example.portfolioBackend.model.CV;
+import com.example.portfolioBackend.model.CVDTO;
 import com.example.portfolioBackend.service.CVService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,14 +20,25 @@ public class CVController {
     @Autowired
     private CVService cvService;
 
-    @PostMapping(value = "/uploadCV", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Void> uploadCV (@RequestParam("file") MultipartFile file, HttpServletRequest request) throws IOException {
+    @PostMapping(value = "/parseCVFile", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<CV> parseCVFile (@RequestParam("file") MultipartFile file) {
         try {
-            cvService.saveCV(file);
+            CV parsedCVObject = cvService.processCVFile(file);
 
-            return ResponseEntity.status(HttpStatus.OK).build();
+            return new ResponseEntity<>(parsedCVObject, HttpStatus.OK);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE).build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PostMapping("/saveCV")
+    public ResponseEntity<CV> saveCV (@RequestBody CVDTO cvDto) {
+        try {
+            CV savedCV = cvService.saveCV(cvDto);
+
+            return new ResponseEntity<>(savedCV, HttpStatus.OK);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }

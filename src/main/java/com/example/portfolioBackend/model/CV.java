@@ -30,11 +30,10 @@ public class CV {
 
     }
 
-    public CV(Date uploadDate, List<Skill> skillList, List<Experience> experienceList, String summary) {
-        this.uploadDate = uploadDate;
+    public CV(String summary, List<Skill> skillList, List<Experience> experienceList) {
+        this.summary = summary;
         this.skillList = skillList;
         this.experienceList = experienceList;
-        this.summary = summary;
     }
 
     public int getId() {
