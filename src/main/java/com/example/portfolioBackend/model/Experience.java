@@ -32,16 +32,20 @@ public class Experience {
     @Lob
     private String description;
 
+    @Embedded
+    private ImageObject image;
+
     public Experience() {
 
     }
 
-    public Experience(String companyName, LocalDate startDate, LocalDate endDate, String position, String description) {
+    public Experience(String companyName, LocalDate startDate, LocalDate endDate, String position, String description, ImageObject image) {
         this.companyName = companyName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.position = position;
         this.description = description;
+        this.image = image;
     }
 
     public int getId() {
@@ -94,5 +98,13 @@ public class Experience {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ImageObject getImage() {
+        return image;
+    }
+
+    public void setImage(ImageObject image) {
+        this.image = image;
     }
 }
