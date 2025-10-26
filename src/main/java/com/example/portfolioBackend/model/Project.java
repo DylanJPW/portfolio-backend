@@ -19,7 +19,7 @@ public class Project {
     private String description;
 
     @Embedded
-    private ProjectImage image;
+    private ImageObject image;
 
     @Column
     private String repoLink;
@@ -31,7 +31,7 @@ public class Project {
 
     }
 
-    public Project(String name, String description, ProjectImage image, String repoLink, List<String> tags) {
+    public Project(String name, String description, ImageObject image, String repoLink, List<String> tags) {
         this.name = name;
         this.description = description;
         this.image = image;
@@ -59,11 +59,11 @@ public class Project {
         this.description = description;
     }
 
-    public ProjectImage getImage() {
+    public ImageObject getImage() {
         return image;
     }
 
-    public void setImage(ProjectImage image) {
+    public void setImage(ImageObject image) {
         this.image = image;
     }
 

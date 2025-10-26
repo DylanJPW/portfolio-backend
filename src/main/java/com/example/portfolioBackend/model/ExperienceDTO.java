@@ -8,16 +8,18 @@ public class ExperienceDTO {
     private LocalDate endDate;
     private String position;
     private String description;
+    private ImageObject image;
 
     public ExperienceDTO() {
     }
 
-    public ExperienceDTO(String companyName, LocalDate startDate, LocalDate endDate, String position, String description) {
+    public ExperienceDTO(String companyName, LocalDate startDate, LocalDate endDate, String position, String description, ImageObject image) {
         this.companyName = companyName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.position = position;
         this.description = description;
+        this.image = image;
     }
 
     public String getCompanyName() {
@@ -58,5 +60,13 @@ public class ExperienceDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ImageObject getImage() {
+        return image;
+    }
+
+    public void setImage(ImageObject image) {
+        this.image = image;
     }
 }

@@ -7,12 +7,12 @@ public class ProjectDTO {
     private String description;
     private String repoLink;
     private List<String> tags;
-    private ProjectImage image;
+    private ImageObject image;
 
     public ProjectDTO() {
     }
 
-    public ProjectDTO(String name, String description, String repoLink, List<String> tags, ProjectImage image) {
+    public ProjectDTO(String name, String description, String repoLink, List<String> tags, ImageObject image) {
         this.name = name;
         this.description = description;
         this.repoLink = repoLink;
@@ -52,11 +52,11 @@ public class ProjectDTO {
         this.tags = tags;
     }
 
-    public ProjectImage getImage() {
+    public ImageObject getImage() {
         return image;
     }
 
-    public void setImage(ProjectImage image) {
+    public void setImage(ImageObject image) {
         this.image = image;
     }
 }

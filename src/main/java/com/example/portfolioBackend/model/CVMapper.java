@@ -16,7 +16,8 @@ public class CVMapper {
                             skillDTO.getName(),
                             skillDTO.getType(),
                             skillDTO.getYearsExperience(),
-                            skillDTO.getDescription()
+                            skillDTO.getDescription(),
+                            skillDTO.getImage()
                     );
                     skill.setCv(cv);
                     return skill;
@@ -30,7 +31,8 @@ public class CVMapper {
                             expDTO.getStartDate(),
                             expDTO.getEndDate(),
                             expDTO.getPosition(),
-                            expDTO.getDescription()
+                            expDTO.getDescription(),
+                            expDTO.getImage()
                     );
                     exp.setCv(cv);
                     return exp;

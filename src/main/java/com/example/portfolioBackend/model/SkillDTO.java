@@ -7,15 +7,17 @@ public class SkillDTO {
     private SkillType type;
     private int yearsExperience;
     private String description;
+    private ImageObject image;
 
     public SkillDTO() {
     }
 
-    public SkillDTO(String name, SkillType type, int yearsExperience, String description) {
+    public SkillDTO(String name, SkillType type, int yearsExperience, String description, ImageObject image) {
         this.name = name;
         this.type = type;
         this.yearsExperience = yearsExperience;
         this.description = description;
+        this.image = image;
     }
 
     public String getName() {
@@ -48,5 +50,13 @@ public class SkillDTO {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ImageObject getImage() {
+        return image;
+    }
+
+    public void setImage(ImageObject image) {
+        this.image = image;
     }
 }

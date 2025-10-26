@@ -29,15 +29,19 @@ public class Skill {
     @Lob
     private String description;
 
+    @Embedded
+    private ImageObject image;
+
     public Skill() {
 
     }
 
-    public Skill(String name, SkillType type, int yearsExperience, String description) {
+    public Skill(String name, SkillType type, int yearsExperience, String description, ImageObject image) {
         this.name = name;
         this.type = type;
         this.yearsExperience = yearsExperience;
         this.description = description;
+        this.image = image;
     }
 
     public int getId() {
@@ -82,5 +86,13 @@ public class Skill {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public ImageObject getImage() {
+        return image;
+    }
+
+    public void setImage(ImageObject image) {
+        this.image = image;
     }
 }

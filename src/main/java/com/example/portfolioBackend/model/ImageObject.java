@@ -3,7 +3,7 @@ package com.example.portfolioBackend.model;
 import jakarta.persistence.Embeddable;
 
 @Embeddable
-public class ProjectImage {
+public class ImageObject {
     private String imageUrl;
 
     private String altText;
