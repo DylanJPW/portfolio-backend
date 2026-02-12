@@ -12,7 +12,6 @@ import java.util.Date;
 @Component
 public class JWTUtil {
     private static final String SECRET = "+UsmAq3XRPudPKF4Td+jcwryTp5+qIhZ3fE+0vO6rfBmjF831uIzRN9xGinkqvjTO8RANe7rq/TiTWNyp/j1Ew==";
-    private final long expirationMs = 24 * 60 * 60 * 1000;
 
     private Key getSigningKey() {
         byte[] keyBytes = Decoders.BASE64.decode(SECRET);
@@ -20,6 +19,7 @@ public class JWTUtil {
     }
 
     public String generateToken(String username) {
+        long expirationMs = 24 * 60 * 60 * 1000;
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date())

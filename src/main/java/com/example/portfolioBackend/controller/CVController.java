@@ -14,7 +14,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/cv")
-@CrossOrigin(origins="http://localhost:3000")
+@CrossOrigin(origins="http://localhost:5173")
 public class CVController {
 
     @Autowired

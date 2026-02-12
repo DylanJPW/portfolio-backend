@@ -1,6 +1,5 @@
 package com.example.portfolioBackend.auth;
 
-import com.example.portfolioBackend.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,14 +20,18 @@ public class SecurityConfig {
     @Autowired
     private JWTRequestFilter jwtRequestFilter;
 
-    @Autowired
-    private AuthService authService;
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(auth -> auth.requestMatchers("/login").permitAll()
-                        .anyRequest().authenticated())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/api/auth/login",
+                                "/api/cv/getLatestCV",
+                                "/api/projects/getAllProjects"
+                        ).permitAll()
+                        .anyRequest()
+                        .authenticated()
+                )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
 

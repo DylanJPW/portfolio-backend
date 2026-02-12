@@ -7,8 +7,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-
 @Service
 public class AuthService implements UserDetailsService {
 
@@ -16,13 +14,13 @@ public class AuthService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
 
-        if (!username.equals("me")) {
+        if (!username.equals("admin")) {
             throw new UsernameNotFoundException("User not found");
         }
 
         return User.builder()
                 .username("admin")
-                .password("$2a$10$xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx") // BCrypt hash
+                .password(new BCryptPasswordEncoder().encode("password"))
                 .roles("ADMIN")
                 .build();
     }
